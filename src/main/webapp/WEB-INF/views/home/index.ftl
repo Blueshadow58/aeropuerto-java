@@ -17,4 +17,4 @@
     <li><@link_to controller="vuelos">Vuelos CRUD </@link_to></li>
     <li><a href="vuelos.xml" >Vuelos XML  <a></li>
     <li><a href="vuelos.json" >Vuelos JSON  <a></li>
-    </ul>
+  </ul>
