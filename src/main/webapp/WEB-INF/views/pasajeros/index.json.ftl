@@ -4,7 +4,7 @@
         "id":"${pasajero.id}",
         "nombre": "${pasajero.nombre}",
         "apellido": "${pasajero.apellido}",        
-        "nacionalidad": "${pasajero.nacionalidad}",
+        "nacionalidad": "${pasajero.nacionalidad}"
         
     }
     <#if pasajero_has_next>,</#if>

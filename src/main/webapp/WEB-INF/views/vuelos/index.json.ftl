@@ -5,7 +5,7 @@
         "nombre": "${vuelo.codigo}",
         "fecha": "${vuelo.fecha}",
         "hora": "${vuelo.hora}",
-        "estado": "${vuelo.estado}",
+        "estado": "${vuelo.estado}"
         
     }
     <#if vuelo_has_next>,</#if>
