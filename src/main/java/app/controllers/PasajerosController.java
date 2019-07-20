@@ -20,83 +20,52 @@ import org.javalite.activeweb.AppController;
 import org.javalite.activeweb.annotations.DELETE;
 import org.javalite.activeweb.annotations.POST;
 import app.models.Pasajero;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.DB;
+import org.javalite.activeweb.annotations.RESTful;
 import org.junit.Before;
 
+@RESTful
+public class PasajerosController extends AppController {  
+    private ObjectMapper mapper = new ObjectMapper();
+public void index(){
+List<Pasajero> pasajeros = Pasajero.findAll();
+view("pasajeros", pasajeros);
+render().contentType("application/json");
+}
 
-public class PasajerosController extends AppController {                
-
-    
-    
-    public void index(){
-        
-        
-        
-        if("xml".equals(format())){
-            render().noLayout().contentType("text/xml");
-        }
-
-        if("json".equals(format())){
-            render().noLayout().contentType("application/json");
-        }
-
-        
-        
-        
-        view("pasajeros", Pasajero.findAll().toMaps());
-        
+    public void create() throws IOException {
+        Map datos = mapper.readValue(getRequestString(), Map.class);
+        Pasajero p = new Pasajero();       
+        p.fromMap(datos);
+        p.saveIt();
        
-        
     }
-
-    public void show(){
-
-        
-        
-        //this is to protect from URL hacking
-        Pasajero p = (Pasajero) Pasajero.findById(getId());
-        if(p != null){
-            view("pasajero", p);
-            
-        }else{
-            view("message", "are you trying to hack the URL?");
-            render("/system/404");
-        }
-     
+ 
+    public void update() {
+        // code to update an existing product
+    }
+ 
+    public void show() {
+        // code to find one product
+    }
+ 
+    public void destroy() {
+        // code to remove an existing product 
     }
     
-    @POST
-    public void create(){
-     
-        
-        
-        Pasajero pasajero = new Pasajero();
-        pasajero.fromMap(params1st());
-        if(!pasajero.save()){
-            flash("message", "Something went wrong, please  fill out all fields");
-            flash("errors", pasajero.errors());
-            flash("params", params1st());
-            redirect(PasajerosController.class, "new_form");
-        }else{
-            flash("message", "New pasajero was added: " + pasajero.get("nombre"));
-            redirect(PasajerosController.class);
-        }
-     
+     @Override
+    protected String getContentType() {
+        return "application/json";
     }
-
-    @DELETE
-    public void delete(){
-
-     
-        
-        
-        Pasajero p = (Pasajero)Pasajero.findById(getId());
-        String nombre = p.getString("nombre");
-        p.delete();
-        flash("message", "Pasajero: '" + nombre + "' was deleted");
-        redirect(PasajerosController.class);
+ 
+    @Override
+    protected String getLayout() {
+        return null;
     }
-
-    public void newForm(){}
+   
 }
