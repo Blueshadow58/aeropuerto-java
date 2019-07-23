@@ -10,6 +10,3 @@
     <#if pasajero_has_next>,</#if>
 </#list>
 ]
-
-
-
